@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <NAME>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      #Matches template labels
+      run: <NAME>
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        # Gets matched by the Deployment.
+        run: <NAME>
+    spec:
+      containers:
+        - name: <NAME>
+          image: <IMAGE NAME>
+          # Resource restrictions can be enabled
+          # resources:
+          #   requests:
+          #     cpu: 100m
+          #   limits:
+          #     cpu: 100m
+      # imagePullSecrets:
+      #   - name: <PULL SECRET>
